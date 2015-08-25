@@ -1,0 +1,226 @@
+﻿@model MaterialHandling.Data.Material
+
+<style>
+    body { margin:0; padding:0;}
+
+    h2 {
+        background-color:red;
+        color:white;
+    }
+
+</style>
+
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+</head>
+<body>
+    <!--Message about site update-->
+    <!--<p style="color:red"><b><font size="4">This website and database will be down from 3:30pm till 3:45pm</font></b></p>-->
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!--Hidden input gives each entry an id-->
+            @Html.HiddenFor(model => model.id)
+
+            <!--Type of Transaction-->
+            <!--This will show the type of transaction either In or Out-->
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                   
+                    @if (Model.Type == "Out") { 
+                        <input type="radio" id="radio1" name="Type" value="In" />
+                        <label for="radio1">In</label>
+                        <input type="radio" id="radio2" name="Type" value="Out" checked />
+                        <label for="radio2">Out</label>
+                    }
+                   
+                    else 
+                    { 
+                        <input type="radio" id="radio1" name="Type" value="In" checked/>
+                        <label for="radio1">In</label>
+                        <input type="radio" id="radio2" name="Type" value="Out" />
+                        <label for="radio2">Out</label>
+                    }                  
+                </div>
+            </div>
+            <div id="show-me" style="display:none"><p style="color:red" ><b>You are about to extract from inventory</b></p></div>
+
+            <!--Depth of material in the aisle-->     
+            @Html.LabelFor(model => model.Depth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @if (Model.Depth == "B")
+                {
+                    <input type="radio" id="depth1" name="Depth" value="A" />
+                    <label for="depth1">A</label>
+                    <input type="radio" id="depth2" name="Depth" value="B" checked />
+                    <label for="depth2">B</label>
+                    <input type="radio" id="depth3" name="Depth" value="C" />
+                    <label for="depth3">C</label>
+                    <input type="radio" id="depth4" name="Depth" value="D" />
+                    <label for="depth4">D</label>
+                }                             
+                else if (Model.Depth == "C")
+                {
+                    <input type="radio" id="depth1" name="Depth" value="A"  />
+                    <label for="depth1">A</label>
+                    <input type="radio" id="depth2" name="Depth" value="B"  />
+                    <label for="depth2">B</label>
+                    <input type="radio" id="depth3" name="Depth" value="C" checked />
+                    <label for="depth3">C</label>
+                    <input type="radio" id="depth4" name="Depth" value="D" />
+                    <label for="depth4">D</label>
+                }               
+                else if (Model.Depth == "D")
+                {
+                    <input type="radio" id="depth1" name="Depth" value="A"  />
+                    <label for="depth1">A</label>
+                    <input type="radio" id="depth2" name="Depth" value="B" />
+                    <label for="depth2">B</label>
+                    <input type="radio" id="depth3" name="Depth" value="C"  />
+                    <label for="depth3">C</label>
+                    <input type="radio" id="depth4" name="Depth" value="D" checked />
+                    <label for="depth4">D</label> 
+                }              
+                else
+                {
+                    <input type="radio" id="depth1" name="Depth" value="A" checked />
+                    <label for="depth1">A</label>
+                    <input type="radio" id="depth2" name="Depth" value="B" />
+                    <label for="depth2">B</label>
+                    <input type="radio" id="depth3" name="Depth" value="C" />
+                    <label for="depth3">C</label>
+                    <input type="radio" id="depth4" name="Depth" value="D"  />
+                    <label for="depth4">D</label> 
+                }
+            </div>
+        
+            <!--This is for entering the PartNumber-->
+            <div class="form-group"><p><br /></p>
+                @Html.LabelFor(model => model.PartNum, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">                    
+                    @Html.TextBoxFor(model => model.PartNum, new { @class = "form-control", id="focus1" })
+                    @Html.ValidationMessageFor(model => model.PartNum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--This is for entering the Aisle-->          
+            <div class="form-group">
+                @Html.LabelFor(model => model.Aisle, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">                
+                    @Html.TextBoxFor(model => model.Aisle, new { @class = "form-control", id="focus2" })
+                    @Html.ValidationMessageFor(model => model.Aisle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--This is for entering the Part Qty-->
+            <div class="form-group">
+                @Html.LabelFor(model => model.Qty, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", id="focus3" })
+                    @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--submit button-->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" id="focus4"/>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!--Go back to the database list-->
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+
+@section Scripts {
+   
+    <script>
+        //Show or hide message about inventory
+        $(function () {
+            $('input[name=Type]').click(function () {
+                if (this.id == "radio2") {
+                    $("#show-me").show('fast');
+                } else {
+                    $("#show-me").hide('fast');
+                }
+            });
+
+            //This will put the curser in the PartNumber textbox when the page opens
+            $('#focus1').focus();
+        
+            /*The next sections deal with automatically moving to the next textbox
+            * The program will start a timer when it senses a key on the keyboard
+            * being pressed or a character being scanned in. 
+            * .5 seconds after the 7th character is scanned in for the PartNumber,
+            * the cursor will move to the Aisle box.
+            * .5 seconds after the 3rd character is scanned in for the Aisle,
+            * the cursor will move to the Qty box.
+            * 4 seconds after the 1st character is scanned/typed in for the Qty,
+            * the cursor will move to the submit button and press it*/
+
+            //start timer after a button is pressed in PartNum box
+            $('#focus1').keyup(function () {
+                if (!_timeoutRunning) {
+                    _timeoutRunning = true;
+                    setTimeout(function () { checkKey(); }, 500);
+                }
+            });
+
+            //start timer after a key is pressed in Aisle
+            $('#focus2').keyup(function () {
+                if (!_timeoutRunning) {
+                    _timeoutRunning = true;
+                    setTimeout(function () { checkKey1(); }, 500);
+                }
+            });
+
+            //start timer after a key is pressed in Qty
+            $('#focus3').keyup(function () {
+                if (!_timeoutRunning) {
+                    _timeoutRunning = true;
+                    setTimeout(function () { checkKey2(); }, 4000);
+                }
+            });   
+        });
+
+        //timer running boolean
+        var _timeoutRunning = false;
+
+        //set the timer to false and if PartNum is 7 or more characters 
+        //go to next Aisle textbox
+        function checkKey() {
+            _timeoutRunning = false;
+            if ($("#focus1").val().length >= 7)
+                $('#focus2').focus();
+        }
+
+        //set the timer to false and if Aisle is 3 or more characters 
+        //go to Qty textbox
+        function checkKey1() {
+            _timeoutRunning = false;
+            if ($("#focus2").val().length >= 3)
+                $('#focus3').focus();
+        }
+
+        //set the timer to false and if Qty is 1 or more characters
+        //go to submit button
+        function checkKey2() {
+            _timeoutRunning = false;
+            if ($("#focus3").val().length >= 1)
+                $('#focus4').click();              
+        }
+
+    </script>
+}

@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>@ViewBag.Title</h2>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<!--This form will accept a username and password from user then submit them to log in-->
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>User Name</td>
+            <td>
+                @Html.TextBox("userName")
+            </td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>
+                @Html.Password("password")
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top: 20px">
+        <input type="submit" value="Log in"/>
+    </div>
+}

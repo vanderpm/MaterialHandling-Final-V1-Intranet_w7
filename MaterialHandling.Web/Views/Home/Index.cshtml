@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MaterialHandling.Data.Material>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    <!--Message about site update-->
+    <!--<p style="color:red"><b><font size="4">This website and database will be down from 3:30pm till 3:45pm</font></b></p>-->
+    
+    <!--Seach boxes for PartNumber or Aisle then autosubmit when text is entered-->
+    <p>
+        Part Number: @Html.TextBox("PartString") <br />
+        Aisle Number:@Html.TextBox("AisleString")
+        <br />
+        <input type="submit" value="Filter" class="linkbutton" id="subHere" />
+        @Html.ActionLink("View All", "Index", "Home", new { PartString = "", AisleString = "" }, new { @class = "linkbutton" })
+    </p>
+}
+
+<!--Create new entry in the database-->
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "linkbutton"})
+</p>
+
+<!--Table displaying the data in the database-->
+<table class="table">
+    <!--Table headers-->
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Depth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aisle)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+    <!--Table data-->
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Depth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aisle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+
+            <!--Edit button-->
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }, new { @class = "linkbutton" })             
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+<!--Javascript code goes here-->
+}
